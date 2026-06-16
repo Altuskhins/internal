@@ -1,4 +1,4 @@
-# FridaGadget для разработчиков плагинов
+# FridaGadget dev docs
 
 Эта документация для разработчиков других плагинов, которым нужно выполнить Frida JS внутри ExteraGram через `FridaGadget.plugin`.
 
