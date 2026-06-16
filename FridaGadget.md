@@ -89,17 +89,6 @@ fridaGadget.onDispose(function () {
 - Собирает JS-логи в память и отдает их через API/dev server.
 - Подключает `java_bridge_prelude.js`, если скрипт явно просит Java bridge.
 
-## Основные файлы
-
-- `FridaGadget.plugin` - основной install/share артефакт.
-- `FridaGadget.py` - локальная runtime/debug копия для этого checkout.
-- `FridaGadget.md` - эта документация.
-- `java_bridge_prelude/` - исходники prelude для `frida-java-bridge`.
-- `java_bridge_prelude.js` - собранный prelude.
-- `fridagadget_modules/` - локальная папка с модульными артефактами в checkout.
-
-В этом окружении нужно держать `FridaGadget.plugin` и `FridaGadget.py` одинаковыми. `.plugin` используется для install/share flow, а локальный loader может смотреть на `.py`.
-
 Проверка:
 
 ```cmd
