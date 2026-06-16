@@ -465,36 +465,6 @@ fridagadget_modules/
   frida-script-hit.txt
 ```
 
-Конфиг пишется сразу в несколько вариантов имени, потому что Frida/Android loader могут искать файл рядом с `.so` по разным схемам:
-
-- `libfrida-gadget.config`
-- `libfrida-gadget.so.config`
-- `libfrida-gadget.config.so`
-
-## Frida Gadget binary
-
-Текущая версия:
-
-```text
-FRIDA_VERSION = 17.9.10
-```
-
-Primary URL:
-
-```text
-https://github.com/frida/frida/releases/download/17.9.10/frida-gadget-17.9.10-android-arm64.so.xz
-```
-
-Fallback:
-
-```text
-https://cdn.jsdelivr.net/gh/Altuskhins/internal@main/frida-gadget-17.9.10-android-arm64.so.xz
-```
-
-Плагин скачивает `.so.xz`, распаковывает через `lzma`, сохраняет как `libfrida-gadget.so`, выставляет права `755` и пишет marker `libfrida-gadget.version`.
-
-Сейчас download flow рассчитан на `android-arm64`. Для другого ABI нужно менять URL и проверку артефакта отдельно.
-
 ## Диагностика
 
 Проверить API из зависимого плагина:
@@ -506,35 +476,6 @@ if fg is not None:
     self.log("Frida logs: %s" % fg.read_logs(plugin_id=__id__, limit=20))
 ```
 
-Типовые симптомы:
-
-- `Frida Gadget plugin is not loaded` - `FridaGadget` выключен или API импортировали слишком рано.
-- `restart_required: True` - native Gadget уже загружен не в `script` mode; нужен restart ExteraGram.
-- `.so не найден` - скачать Gadget не удалось; смотреть `last_error` и лог `gadget download source failed`.
-- `Java is unavailable` - script запросил Java, но prelude отсутствует, не загрузился или Java API недоступен на текущем этапе процесса.
-- Скрипт есть в UI, но не исполняется - проверить `enabled`, `active`, `inactive_reason`, owner state и результат `fg.execute()`.
-
-## Проверка изменений FridaGadget
-
-Синтаксис:
-
-```cmd
-python -m py_compile FridaGadget.plugin FridaGadget.py
-```
-
-Тесты:
-
-```cmd
-python -m unittest tests.test_fridagadget_script_actions
-```
-
-Полный локальный набор:
-
-```cmd
-python -m unittest discover tests
-```
-
-Правила поддержки:
 
 - Не добавлять непроверенные metadata поля вроде `__sdk_version__`.
 - После изменения `FridaGadget.plugin` синхронизировать `FridaGadget.py`.
