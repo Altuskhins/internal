@@ -87,19 +87,6 @@ fridaGadget.onDispose(function () {
 - Экспортирует Python API-модуль `frida_gadget_api`.
 - Поднимает ADB push server на `127.0.0.1:42792` по умолчанию.
 - Собирает JS-логи в память и отдает их через API/dev server.
-- Подключает `java_bridge_prelude.js`, если скрипт явно просит Java bridge.
-
-Проверка:
-
-```cmd
-fc /b FridaGadget.plugin FridaGadget.py
-```
-
-Синхронизация:
-
-```cmd
-copy /Y FridaGadget.plugin FridaGadget.py
-```
 
 ## Python API
 
@@ -107,12 +94,6 @@ FridaGadget публикует модуль:
 
 ```python
 import frida_gadget_api as fg
-```
-
-Текущая версия API:
-
-```python
-fg.API_VERSION == 2
 ```
 
 Методы регистрации:
@@ -214,7 +195,6 @@ fg.clear_logs()
 Рекомендуемый flow:
 
 1. В `on_plugin_load()` лениво импортировать `frida_gadget_api`.
-2. Проверить `API_VERSION >= 2`.
 3. Вызвать `register_script(__id__, script, name=..., replace=True, autoload=True)`.
 4. В `on_plugin_unload()` вызвать `unregister_plugin(__id__)`.
 
@@ -222,7 +202,6 @@ fg.clear_logs()
 
 `autoload=True` означает, что FridaGadget сразу попробует применить bundle. Если Gadget еще не загружен, он запишет config и загрузит native library. Если Gadget уже загружен в `script` interaction, он перезапишет `gadget.js` и обновит mtime.
 
-Native Gadget нельзя нормально выгрузить из процесса. Если он уже загружен в другом interaction mode, API вернет `restart_required=True`; тогда нужен restart ExteraGram.
 
 ## enabled и active
 
