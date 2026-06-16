@@ -4,7 +4,7 @@
 
 `FridaGadget` - библиотечный ExteraGram-плагин. Он загружает Frida Gadget внутрь процесса клиента, собирает общий `gadget.js` bundle из скриптов других плагинов и дает Python API `frida_gadget_api`.
 
-Плагин выполняет произвольный Frida JS в процессе Telegram/ExteraGram. Используйте только свои скрипты и не подключайте непроверенные payload'ы.
+Плагин выполняет произвольный Frida JS в процессе ExteraGram. 
 
 ## Быстрый старт
 
